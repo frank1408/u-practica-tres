@@ -4,6 +4,8 @@ package com.rodriguez.practicatres.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -51,7 +53,7 @@ public class Cliente implements Serializable {
 	@Column(name = "OBSERVACIONES")
 	private String oberservaciones;
 
-	@OneToMany(mappedBy = "dniCl", orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "dniCl", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private final List<Seguro> seguros = new ArrayList<>();
 
 	public String getDniCl() {

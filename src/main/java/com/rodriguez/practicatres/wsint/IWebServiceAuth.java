@@ -92,8 +92,8 @@ public interface IWebServiceAuth {
 	@GetMapping("/companiaseguro/consultar/{companiaseguroId}")
 	public CompaniaSeguro getCompaniaSeguro(@PathVariable Long companiaseguroId);
 
-	@DeleteMapping("/companiaseguro/eliminar/{companiaseguroId}")
-	public void deleteCompaniaSeguro(@PathVariable Long companiaseguroId);
+	@DeleteMapping("/companiaseguro/eliminar/{companiaSeguroId}")
+	public void deleteCompaniaSeguro(@PathVariable Long companiaSeguroId);
 
 	@PostMapping("/companiaseguro/guardar")
 	public CompaniaSeguro postCompaniaSeguro(@RequestBody CompaniaSeguroDto companiaseguroDto);

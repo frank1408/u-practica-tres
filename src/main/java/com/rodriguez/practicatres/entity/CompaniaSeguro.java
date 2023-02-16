@@ -23,10 +23,10 @@ public class CompaniaSeguro implements Serializable {
 	@Column(name = "ID")
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne( optional = true )
 	private Seguro seguro;
 
-	@ManyToOne
+	@ManyToOne( optional = true )
 	private Compania compania;
 
 	public Long getId() {
