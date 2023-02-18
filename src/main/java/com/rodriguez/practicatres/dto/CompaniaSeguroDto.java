@@ -8,31 +8,26 @@ public class CompaniaSeguroDto implements Serializable {
 	private static final long serialVersionUID = -7063747058608553592L;
 
 	private Long id;
-	private SeguroDto seguroDto;
-	private CompaniaDto companiaDto;
+	private Long numeroPoliza;
+	private String nombreCompania;
 
 	public Long getId() {
+		
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public SeguroDto getSeguroDto() {
-		return seguroDto;
+	public Long getNumeroPoliza() {
+		return numeroPoliza;
 	}
-
-	public void setSeguroDto(SeguroDto seguroDto) {
-		this.seguroDto = seguroDto;
+	public void setNumeroPoliza(Long numeroPoliza) {
+		this.numeroPoliza = numeroPoliza;
 	}
-
-	public CompaniaDto getCompaniaDto() {
-		return companiaDto;
+	public String getNombreCompania() {
+		return nombreCompania;
 	}
-
-	public void setCompaniaDto(CompaniaDto companiaDto) {
-		this.companiaDto = companiaDto;
+	public void setNombreCompania(String nombreCompania) {
+		this.nombreCompania = nombreCompania;
 	}
-
 }

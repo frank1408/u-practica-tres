@@ -1,7 +1,9 @@
 
 package com.rodriguez.practicatres.ws;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,7 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.rodriguez.practicatres.dto.ClienteDto;
 import com.rodriguez.practicatres.dto.CompaniaDto;
 import com.rodriguez.practicatres.dto.CompaniaSeguroDto;
+import com.rodriguez.practicatres.dto.Funcion2Dto;
+import com.rodriguez.practicatres.dto.FuncionDto;
 import com.rodriguez.practicatres.dto.PeritoDto;
+import com.rodriguez.practicatres.dto.ProcedimientoDto;
 import com.rodriguez.practicatres.dto.SeguroDto;
 import com.rodriguez.practicatres.dto.SiniestroDto;
 import com.rodriguez.practicatres.entity.Cliente;
@@ -28,6 +33,7 @@ import com.rodriguez.practicatres.repository.PeritoRepository;
 import com.rodriguez.practicatres.repository.SeguroRepository;
 import com.rodriguez.practicatres.repository.SiniestroRepository;
 import com.rodriguez.practicatres.repository.UserLoginRepository;
+import com.rodriguez.practicatres.service.ServicioFuncionProcedimiento;
 import com.rodriguez.practicatres.wsint.IWebServiceAuth;
 
 @Component
@@ -54,7 +60,8 @@ public class WebServiceAuth implements IWebServiceAuth {
 	@Autowired
 	UserLoginRepository userLoginRepository;
 	
-	
+	@Autowired
+	ServicioFuncionProcedimiento sfp;
 	
 	@Override
 	public Cliente getCliente(String clienteId) {
@@ -103,6 +110,16 @@ public class WebServiceAuth implements IWebServiceAuth {
 
 	@Override
 	public void deleteCompania(String companiaId) {
+		
+		List<CompaniaSeguro> cs = companiaSeguroRepository.findAll();
+		cs.forEach( css -> {
+			
+			if(css.getNombreCompania().equals( companiaId)   ) {
+				companiaSeguroRepository.deleteById( css.getId() );
+				seguroRepository.deleteById( css.getNumeroPoliza() );
+			}
+			
+		});
 		companiaRepository.deleteById(companiaId);
 	}
 
@@ -172,6 +189,16 @@ public class WebServiceAuth implements IWebServiceAuth {
 
 	@Override
 	public void deleteSeguro(Long seguroId) {
+		
+		List<CompaniaSeguro> cs = companiaSeguroRepository.findAll();
+		cs.forEach( css -> {
+			
+			if(Objects.equals(css.getNumeroPoliza(), seguroId) ) {
+				companiaSeguroRepository.deleteById( css.getId() );
+				companiaRepository.deleteById( css.getNombreCompania() );
+			}
+			
+		});
 		seguroRepository.deleteById(seguroId);
 	}
 
@@ -263,16 +290,8 @@ public class WebServiceAuth implements IWebServiceAuth {
 		if( companiaSeguroDto.getId() != null ) {
 			companiaSeguro.setId( companiaSeguroDto.getId() );
 		}
-		
-		Compania compania = new Compania();
-		compania.setNombreCompania( companiaSeguroDto.getCompaniaDto().getNombreCompania() );
-		companiaSeguro.setCompania( compania );
-		
-		Seguro seguro = new Seguro();
-		seguro.setNumeroPoliza( companiaSeguroDto.getSeguroDto().getNumeroPoliza() );
-		seguro.setDniCl(companiaSeguroDto.getSeguroDto().getDniCl() );
-		companiaSeguro.setSeguro( seguro );
-		
+		companiaSeguro.setNombreCompania( companiaSeguroDto.getNombreCompania() );
+		companiaSeguro.setNumeroPoliza( companiaSeguroDto.getNumeroPoliza() );
 		return companiaSeguroRepository.save(companiaSeguro);
 	}
 	
@@ -365,5 +384,28 @@ public class WebServiceAuth implements IWebServiceAuth {
 		return clienteRepository.findAll( paginador );
 	}
 
+
+
+	
+	
+	
+	
+	
+	@Override
+	public FuncionDto ejecutarFuncion(String texto, int numero) {
+		return sfp.funcionDb(texto, numero);
+	}
+
+	@Override
+	public Funcion2Dto ejecutarFuncion2(BigDecimal numA, BigDecimal numB) {
+		return sfp.funcionDb2(numA, numB);
+	}
+	
+	@Override
+	public ProcedimientoDto ejectuarProcedimiento(BigDecimal numA, BigDecimal numB) {
+		return sfp.procedimientoDb( numA, numB );
+	}
+	
+	
 	
 }

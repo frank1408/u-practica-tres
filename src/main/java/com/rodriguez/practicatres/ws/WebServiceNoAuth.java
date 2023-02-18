@@ -18,6 +18,8 @@ public class WebServiceNoAuth implements IWebServiceNoAuth {
 
 	@Autowired
 	TokenJwt tokenJwt;
+	
+
 
 	@Override
 	public TokenDto postLogin(UserLoginDto userLoginDto) {
@@ -42,5 +44,8 @@ public class WebServiceNoAuth implements IWebServiceNoAuth {
 		userLogin.setUsuario(userLoginDto.getUsuario());
 		return userLoginRepository.save(userLogin);
 	}
+	
+
+
 
 }

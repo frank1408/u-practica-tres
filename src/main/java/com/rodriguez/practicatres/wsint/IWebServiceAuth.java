@@ -1,6 +1,7 @@
 
 package com.rodriguez.practicatres.wsint;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rodriguez.practicatres.dto.ClienteDto;
 import com.rodriguez.practicatres.dto.CompaniaDto;
 import com.rodriguez.practicatres.dto.CompaniaSeguroDto;
+import com.rodriguez.practicatres.dto.Funcion2Dto;
+import com.rodriguez.practicatres.dto.FuncionDto;
 import com.rodriguez.practicatres.dto.PeritoDto;
+import com.rodriguez.practicatres.dto.ProcedimientoDto;
 import com.rodriguez.practicatres.dto.SeguroDto;
 import com.rodriguez.practicatres.dto.SiniestroDto;
 import com.rodriguez.practicatres.entity.Cliente;
@@ -145,5 +149,19 @@ public interface IWebServiceAuth {
 
 	@GetMapping("/perito/consultar/codigopostal/{codigoPostalPerito}")
 	public List<Perito> getPeritosPorCodigoPostal(@PathVariable String codigoPostalPerito);
+	
 
+	
+	
+	
+	@GetMapping("/funcion/{texto}/{numero}")
+	public FuncionDto ejecutarFuncion(@PathVariable String texto, @PathVariable int numero );
+
+	@GetMapping("/funcion2/{numA}/{numB}")
+	public Funcion2Dto ejecutarFuncion2(@PathVariable BigDecimal numA, @PathVariable BigDecimal numB );
+	
+	@GetMapping("/procedimiento/{numA}/{numB}")
+	public ProcedimientoDto ejectuarProcedimiento(@PathVariable BigDecimal numA, @PathVariable BigDecimal numB );
+	
+	
 }

@@ -2,11 +2,18 @@
 package com.rodriguez.practicatres.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -39,6 +46,14 @@ public class Seguro implements Serializable {
 
 	@Column(name = "DNI_CL", nullable = true )
 	private String dniCl;
+
+	@ManyToMany( mappedBy = "seguros", cascade = CascadeType.ALL )
+	@JsonIgnoreProperties(value="seguros")
+	private List<Compania> companias = new ArrayList<>();
+	
+	public List<Compania> getCompanias() {
+		return companias;
+	}
 
 	public Long getNumeroPoliza() {
 		return numeroPoliza;
