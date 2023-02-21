@@ -11,7 +11,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "COMPANIA_SEGURO", schema = "SEGUNI")
+@Table(name = "COMPANIA_SEGURO", schema = "SEGUNI2")
 public class CompaniaSeguro implements Serializable {
 
 	private static final long serialVersionUID = 6407755853374429021L;

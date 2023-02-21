@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table( name = "PERITO", schema = "SEGUNI" )
+@Table( name = "PERITO", schema = "SEGUNI2" )
 public class Perito implements Serializable {
 	
 	private static final long serialVersionUID = -7505548571505110857L;
