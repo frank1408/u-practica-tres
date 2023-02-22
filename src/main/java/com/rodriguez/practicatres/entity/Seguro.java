@@ -4,9 +4,7 @@ package com.rodriguez.practicatres.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,9 +14,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
 @Table(name = "SEGURO", schema = "SEGUNI")
+@Data
 public class Seguro implements Serializable {
 
 	private static final long serialVersionUID = -1166060214266590796L;
@@ -44,71 +44,11 @@ public class Seguro implements Serializable {
 	@Column(name = "OBSERVACIONES")
 	private String observaciones;
 
-	@Column(name = "DNI_CL", nullable = true )
+	@Column(name = "DNI_CL", nullable = true)
 	private String dniCl;
 
-	@ManyToMany( mappedBy = "seguros", cascade = CascadeType.ALL )
-	@JsonIgnoreProperties(value="seguros")
+	@ManyToMany(mappedBy = "seguros", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties(value = "seguros")
 	private List<Compania> companias = new ArrayList<>();
-	
-	public List<Compania> getCompanias() {
-		return companias;
-	}
-
-	public Long getNumeroPoliza() {
-		return numeroPoliza;
-	}
-
-	public void setNumeroPoliza(Long numeroPoliza) {
-		this.numeroPoliza = numeroPoliza;
-	}
-
-	public String getRamo() {
-		return ramo;
-	}
-
-	public void setRamo(String ramo) {
-		this.ramo = ramo;
-	}
-
-	public String getFechaInicio() {
-		return fechaInicio;
-	}
-
-	public void setFechaInicio(String fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-
-	public String getFechaVencimiento() {
-		return fechaVencimiento;
-	}
-
-	public void setFechaVencimiento(String fechaVencimiento) {
-		this.fechaVencimiento = fechaVencimiento;
-	}
-
-	public String getCondicionesParticulares() {
-		return condicionesParticulares;
-	}
-
-	public void setCondicionesParticulares(String condicionesParticulares) {
-		this.condicionesParticulares = condicionesParticulares;
-	}
-
-	public String getObservaciones() {
-		return observaciones;
-	}
-
-	public void setObservaciones(String observaciones) {
-		this.observaciones = observaciones;
-	}
-
-	public String getDniCl() {
-		return dniCl;
-	}
-
-	public void setDniCl(String dniCl) {
-		this.dniCl = dniCl;
-	}
 
 }

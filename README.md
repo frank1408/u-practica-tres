@@ -18,7 +18,7 @@ Para que la aplicación funcione se necesita:
 3. Oracle XE 22.2.1.234 Build 234.1810
 
 ## En sistemas operativos tipo Unix
-```sh
+```
 apt install openjdk-17-jdk openjdk-17-jre maven
 ```
 
@@ -42,7 +42,7 @@ Antes de compilar se modifica el archivo `application.properties`.
 ```
 
 Generandose un JAR en la carpeta `target`, que se puede ejecutar con:
-```sh
+```
 java -jar practicatres-0.0.1-SNAPSHOT.jar
 ```
 

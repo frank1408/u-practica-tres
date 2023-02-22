@@ -10,9 +10,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
 @Table(name = "SINIESTRO", schema = "SEGUNI")
+@Data
 public class Siniestro implements Serializable {
 
 	private static final long serialVersionUID = 636940018674376069L;
@@ -41,59 +43,4 @@ public class Siniestro implements Serializable {
 	@ManyToOne
 	private Perito perito;
 
-	public Long getIdSiniestro() {
-		return idSiniestro;
-	}
-
-	public void setIdSiniestro(Long idSiniestro) {
-		this.idSiniestro = idSiniestro;
-	}
-
-	public String getFechaSiniestro() {
-		return fechaSiniestro;
-	}
-
-	public void setFechaSiniestro(String fechaSiniestro) {
-		this.fechaSiniestro = fechaSiniestro;
-	}
-
-	public String getCausas() {
-		return causas;
-	}
-
-	public void setCausas(String causas) {
-		this.causas = causas;
-	}
-
-	public String getAceptado() {
-		return aceptado;
-	}
-
-	public void setAceptado(String aceptado) {
-		this.aceptado = aceptado;
-	}
-
-	public Double getIndemnizacion() {
-		return indemnizacion;
-	}
-
-	public void setIndemnizacion(Double indemnizacion) {
-		this.indemnizacion = indemnizacion;
-	}
-
-	public Seguro getSeguro() {
-		return seguro;
-	}
-
-	public void setSeguro(Seguro seguro) {
-		this.seguro = seguro;
-	}
-
-	public Perito getPerito() {
-		return perito;
-	}
-
-	public void setPerito(Perito perito) {
-		this.perito = perito;
-	}
 }

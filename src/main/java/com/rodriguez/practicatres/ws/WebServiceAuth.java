@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +41,8 @@ import com.rodriguez.practicatres.wsint.IWebServiceAuth;
 @Component
 public class WebServiceAuth implements IWebServiceAuth {
 	
+	private static final Log LOG = LogFactory.getLog(WebServiceAuth.class);
+	
 	@Autowired
 	ClienteRepository clienteRepository;
 	
@@ -69,6 +73,9 @@ public class WebServiceAuth implements IWebServiceAuth {
 		if( cliente.isPresent() ) {
 			return cliente.get();
 		}
+		StringBuilder sb = new StringBuilder("NO existe cliente con id: ");
+		sb.append( clienteId );
+		LOG.warn( sb );
 		return null;
 	}
 	

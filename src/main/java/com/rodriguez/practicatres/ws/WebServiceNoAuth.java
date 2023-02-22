@@ -1,6 +1,8 @@
 
 package com.rodriguez.practicatres.ws;
 
+import java.util.Optional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.rodriguez.practicatres.dto.TokenDto;
@@ -18,34 +20,28 @@ public class WebServiceNoAuth implements IWebServiceNoAuth {
 
 	@Autowired
 	TokenJwt tokenJwt;
-	
-
 
 	@Override
 	public TokenDto postLogin(UserLoginDto userLoginDto) {
 
-		UserLogin userLogin = userLoginRepository.findByUsuarioAndContrasena(userLoginDto.getUsuario(),
+		Optional<UserLogin> userLogin = userLoginRepository.findByUsuarioAndContrasena(userLoginDto.getUsuario(),
 				userLoginDto.getContrasena());
 
-		if (userLogin == null) {
+		if (!userLogin.isPresent()) {
 			return null;
 		}
 
-		final String ttoken = tokenJwt.generateToken(userLogin.getUsuario());
 		TokenDto tt = new TokenDto();
-		tt.setToken(ttoken);
+		tt.setToken(  tokenJwt.generateToken(  userLogin.get().getUsuario()  )  );
 		return tt;
 	}
 
 	@Override
 	public UserLogin postLoginGuardar(UserLoginDto userLoginDto) {
+		ModelMapper modelMapper = new ModelMapper();
 		UserLogin userLogin = new UserLogin();
-		userLogin.setContrasena(userLoginDto.getContrasena());
-		userLogin.setUsuario(userLoginDto.getUsuario());
+		modelMapper.map(userLoginDto, userLogin);
 		return userLoginRepository.save(userLogin);
 	}
-	
-
-
 
 }
