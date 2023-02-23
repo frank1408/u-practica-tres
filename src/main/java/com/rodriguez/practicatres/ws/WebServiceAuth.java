@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -67,6 +68,8 @@ public class WebServiceAuth implements IWebServiceAuth {
 	@Autowired
 	ServicioFuncionProcedimiento sfp;
 	
+	private ModelMapper modelMapper = new ModelMapper();
+	
 	@Override
 	public Cliente getCliente(String clienteId) {
 		Optional<Cliente> cliente = clienteRepository.findById(clienteId);
@@ -86,18 +89,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 
 	@Override
 	public Cliente postCliente( ClienteDto clienteDto) {
-		Cliente clienteDb = new Cliente();
-		clienteDb.setApellido1(clienteDto.getApellido1());
-		clienteDb.setApellido2(clienteDto.getApellido2());
-		clienteDb.setCiudad(clienteDto.getCiudad());
-		clienteDb.setClaseVia(clienteDto.getClaseVia());
-		clienteDb.setCodigoPostal(clienteDto.getCodigoPostal());
-		clienteDb.setDniCl(clienteDto.getDniCl());
-		clienteDb.setNombreCl(clienteDto.getNombreCl());
-		clienteDb.setNombreVia(clienteDto.getNombreVia());
-		clienteDb.setNumeroVia(clienteDto.getNumeroVia());
-		clienteDb.setOberservaciones(clienteDto.getOberservaciones());
-		clienteDb.setTelefono(clienteDto.getTelefono());
+		Cliente clienteDb = modelMapper.map(clienteDto, Cliente.class);
 		return clienteRepository.save(clienteDb);
 	}
 
@@ -132,15 +124,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 
 	@Override
 	public Compania postCompania(CompaniaDto companiaDto) {
-		Compania compania = new Compania();
-		compania.setClaseVia(companiaDto.getClaseVia());
-		compania.setCodigoPostal(companiaDto.getCodigoPostal());
-		compania.setNombreCompania(companiaDto.getNombreCompania());
-		compania.setNombreVia(companiaDto.getNombreVia());
-		compania.setNotas(companiaDto.getNotas());
-		compania.setNumeroVia(companiaDto.getNumeroVia());
-		compania.setTelefonoContratacion(companiaDto.getTelefonoContratacion());
-		compania.setTelefonoSiniestro(companiaDto.getTelefonoSiniestro());
+		Compania compania = modelMapper.map(companiaDto, Compania.class);
 		return companiaRepository.save(compania);
 	}
 
