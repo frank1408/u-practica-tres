@@ -68,7 +68,8 @@ public class WebServiceAuth implements IWebServiceAuth {
 	@Autowired
 	ServicioFuncionProcedimiento sfp;
 	
-	private ModelMapper modelMapper = new ModelMapper();
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Override
 	public Cliente getCliente(String clienteId) {
