@@ -149,18 +149,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 
 	@Override
 	public Perito postPerito(PeritoDto peritoDto) {
-		Perito perito = new Perito();
-		perito.setApellidoPerito1( peritoDto.getApellidoPerito1() );
-		perito.setApellidoPerito2( peritoDto.getApellidoPerito2() );
-		perito.setCalleVia( peritoDto.getCalleVia() );
-		perito.setCiudad(  peritoDto.getCiudad() );
-		perito.setCodigoPostal(  peritoDto.getCodigoPostal() );
-		perito.setDniPerito(  peritoDto.getDniPerito() );
-		perito.setNombrePerito(  peritoDto.getNombrePerito() );
-		perito.setNombreVia( peritoDto.getNombreVia());
-		perito.setNumeroVia( peritoDto.getNumeroVia());
-		perito.setTelefonoContacto( peritoDto.getTelefonoContacto());
-		perito.setTelefonoOficina( peritoDto.getTelefonoOficina());
+		Perito perito = modelMapper.map(peritoDto, Perito.class );
 		return peritoRepository.save(perito);
 	}
 
@@ -195,14 +184,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 
 	@Override
 	public Seguro postSeguro(SeguroDto seguroDto) {
-		Seguro seguro = new Seguro();
-		seguro.setCondicionesParticulares(seguroDto.getCondicionesParticulares());
-		seguro.setDniCl(seguroDto.getDniCl());
-		seguro.setFechaInicio(seguroDto.getFechaInicio());
-		seguro.setFechaVencimiento(seguroDto.getFechaVencimiento());
-		seguro.setNumeroPoliza(seguroDto.getNumeroPoliza());
-		seguro.setObservaciones(seguroDto.getObservaciones());
-		seguro.setRamo(seguroDto.getRamo());
+		Seguro seguro = modelMapper.map(seguroDto, Seguro.class);
 		return seguroRepository.save(seguro);
 	}
 
@@ -275,14 +257,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 	
 	@Override
 	public CompaniaSeguro postCompaniaSeguro(CompaniaSeguroDto companiaSeguroDto) {
-		
-		CompaniaSeguro companiaSeguro = new CompaniaSeguro();
-		
-		if( companiaSeguroDto.getId() != null ) {
-			companiaSeguro.setId( companiaSeguroDto.getId() );
-		}
-		companiaSeguro.setNombreCompania( companiaSeguroDto.getNombreCompania() );
-		companiaSeguro.setNumeroPoliza( companiaSeguroDto.getNumeroPoliza() );
+		CompaniaSeguro companiaSeguro = modelMapper.map(companiaSeguroDto, CompaniaSeguro.class);
 		return companiaSeguroRepository.save(companiaSeguro);
 	}
 	
