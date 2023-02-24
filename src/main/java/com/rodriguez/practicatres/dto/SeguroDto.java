@@ -2,6 +2,7 @@
 package com.rodriguez.practicatres.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 import lombok.Data;
 
 @Data
@@ -11,8 +12,8 @@ public class SeguroDto implements Serializable {
 
 	private Long numeroPoliza;
 	private String ramo;
-	private String fechaInicio;
-	private String fechaVencimiento;
+	private Date fechaInicio;
+	private Date fechaVencimiento;
 	private String condicionesParticulares;
 	private String observaciones;
 	private String dniCl;

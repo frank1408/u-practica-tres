@@ -2,6 +2,7 @@
 package com.rodriguez.practicatres.repository;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +14,7 @@ import com.rodriguez.practicatres.entity.Seguro;
 @Repository("seguroRepository")
 public interface SeguroRepository extends JpaRepository<Seguro, Serializable> {
 
-	List<Seguro> findByFechaVencimientoStartingWith(String fechaVencimiento);
+	List<Seguro> findByFechaVencimientoBefore(Date fechaVencimiento);
 
 	List<Seguro> findByCondicionesParticulares(String condicionesParticulares);
 

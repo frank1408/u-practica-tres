@@ -2,6 +2,9 @@
 package com.rodriguez.practicatres.ws;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -68,8 +71,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 	@Autowired
 	ServicioFuncionProcedimiento sfp;
 	
-	@Autowired
-	private ModelMapper modelMapper;
+	private static final ModelMapper modelMapper = new ModelMapper();
 	
 	@Override
 	public Cliente getCliente(String clienteId) {
@@ -90,8 +92,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 
 	@Override
 	public Cliente postCliente( ClienteDto clienteDto) {
-		Cliente clienteDb = modelMapper.map(clienteDto, Cliente.class);
-		return clienteRepository.save(clienteDb);
+		return clienteRepository.save(modelMapper.map(clienteDto, Cliente.class));
 	}
 
 	@Override
@@ -125,8 +126,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 
 	@Override
 	public Compania postCompania(CompaniaDto companiaDto) {
-		Compania compania = modelMapper.map(companiaDto, Compania.class);
-		return companiaRepository.save(compania);
+		return companiaRepository.save(modelMapper.map(companiaDto, Compania.class));
 	}
 
 	@Override
@@ -150,8 +150,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 
 	@Override
 	public Perito postPerito(PeritoDto peritoDto) {
-		Perito perito = modelMapper.map(peritoDto, Perito.class );
-		return peritoRepository.save(perito);
+		return peritoRepository.save(modelMapper.map(peritoDto, Perito.class));
 	}
 
 	@Override
@@ -185,8 +184,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 
 	@Override
 	public Seguro postSeguro(SeguroDto seguroDto) {
-		Seguro seguro = modelMapper.map(seguroDto, Seguro.class);
-		return seguroRepository.save(seguro);
+		return seguroRepository.save(modelMapper.map(seguroDto, Seguro.class));
 	}
 
 	@Override
@@ -258,8 +256,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 	
 	@Override
 	public CompaniaSeguro postCompaniaSeguro(CompaniaSeguroDto companiaSeguroDto) {
-		CompaniaSeguro companiaSeguro = modelMapper.map(companiaSeguroDto, CompaniaSeguro.class);
-		return companiaSeguroRepository.save(companiaSeguro);
+		return companiaSeguroRepository.save(modelMapper.map(companiaSeguroDto, CompaniaSeguro.class));
 	}
 	
 	@Override
@@ -297,8 +294,15 @@ public class WebServiceAuth implements IWebServiceAuth {
 	
 
 	@Override
-	public List<Seguro> getSegurosPorFechaVencimientoQueComiencePor(String fechavencimiento) {
-		return seguroRepository.findByFechaVencimientoStartingWith(fechavencimiento);
+	public List<Seguro> getSegurosPorFechaVencimientoAntesDe(String fechavencimiento) {
+		Date fecha = null;
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			fecha = simpleDateFormat.parse(fechavencimiento);
+		} catch (ParseException e) {
+			LOG.warn(e);
+		}
+		return seguroRepository.findByFechaVencimientoBefore(fecha);
 	}
 
 	@Override

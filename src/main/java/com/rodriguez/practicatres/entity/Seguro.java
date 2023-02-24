@@ -3,6 +3,7 @@ package com.rodriguez.practicatres.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
@@ -33,10 +34,10 @@ public class Seguro implements Serializable {
 	private String ramo;
 
 	@Column(name = "FECHA_INICIO")
-	private String fechaInicio;
+	private Date fechaInicio;
 
 	@Column(name = "FECHA_VENCIMIENTO")
-	private String fechaVencimiento;
+	private Date fechaVencimiento;
 
 	@Column(name = "CONDICIONES_PARTICULARES")
 	private String condicionesParticulares;

@@ -127,7 +127,7 @@ public interface IWebServiceAuth {
 	public List<Siniestro> getSiniestrosPorIndemnizacion(@PathVariable Double indemnizacion);
 
 	@GetMapping("/seguro/consultar/fechavencimiento/{fechavencimiento}")
-	public List<Seguro> getSegurosPorFechaVencimientoQueComiencePor(@PathVariable String fechavencimiento);
+	public List<Seguro> getSegurosPorFechaVencimientoAntesDe(@PathVariable String fechavencimiento);
 
 	@GetMapping("/seguro/consultar/condicionesparticulares/{condiciones}")
 	public List<Seguro> getSegurosPorCondicionesParticulares(@PathVariable String condiciones);
