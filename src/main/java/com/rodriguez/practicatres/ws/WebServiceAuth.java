@@ -44,54 +44,52 @@ import com.rodriguez.practicatres.wsint.IWebServiceAuth;
 
 @Component
 public class WebServiceAuth implements IWebServiceAuth {
-	
+
 	private static final Log LOG = LogFactory.getLog(WebServiceAuth.class);
-	
+
+	private static final ModelMapper modelMapper = new ModelMapper();
+
 	@Autowired
 	ClienteRepository clienteRepository;
-	
+
 	@Autowired
 	CompaniaRepository companiaRepository;
-	
+
 	@Autowired
 	CompaniaSeguroRepository companiaSeguroRepository;
-	
+
 	@Autowired
 	PeritoRepository peritoRepository;
-	
+
 	@Autowired
 	SeguroRepository seguroRepository;
-	
+
 	@Autowired
 	SiniestroRepository siniestroRepository;
-	
+
 	@Autowired
 	UserLoginRepository userLoginRepository;
-	
+
 	@Autowired
 	ServicioFuncionProcedimiento sfp;
-	
-	private static final ModelMapper modelMapper = new ModelMapper();
-	
+
 	@Override
 	public Cliente getCliente(String clienteId) {
 		Optional<Cliente> cliente = clienteRepository.findById(clienteId);
-		if( cliente.isPresent() ) {
+		if (cliente.isPresent()) {
 			return cliente.get();
 		}
-		StringBuilder sb = new StringBuilder("NO existe cliente con id: ");
-		sb.append( clienteId );
-		LOG.warn( sb );
+		LOG.error("No existe cliente");
 		return null;
 	}
-	
+
 	@Override
 	public List<Cliente> getClientes() {
 		return clienteRepository.findAll();
 	}
 
 	@Override
-	public Cliente postCliente( ClienteDto clienteDto) {
+	public Cliente postCliente(ClienteDto clienteDto) {
 		return clienteRepository.save(modelMapper.map(clienteDto, Cliente.class));
 	}
 
@@ -103,7 +101,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 	@Override
 	public Compania getCompania(String companiaId) {
 		Optional<Compania> compania = companiaRepository.findById(companiaId);
-		if( compania.isPresent() ) {
+		if (compania.isPresent()) {
 			return compania.get();
 		}
 		return null;
@@ -111,15 +109,15 @@ public class WebServiceAuth implements IWebServiceAuth {
 
 	@Override
 	public void deleteCompania(String companiaId) {
-		
+
 		List<CompaniaSeguro> cs = companiaSeguroRepository.findAll();
-		cs.forEach( css -> {
-			
-			if(css.getNombreCompania().equals( companiaId)   ) {
-				companiaSeguroRepository.deleteById( css.getId() );
-				seguroRepository.deleteById( css.getNumeroPoliza() );
+		cs.forEach(css -> {
+
+			if (css.getNombreCompania().equals(companiaId)) {
+				companiaSeguroRepository.deleteById(css.getId());
+				seguroRepository.deleteById(css.getNumeroPoliza());
 			}
-			
+
 		});
 		companiaRepository.deleteById(companiaId);
 	}
@@ -137,7 +135,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 	@Override
 	public Perito getPerito(String peritoId) {
 		Optional<Perito> perito = peritoRepository.findById(peritoId);
-		if( perito.isPresent() ) {
+		if (perito.isPresent()) {
 			return perito.get();
 		}
 		return null;
@@ -161,7 +159,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 	@Override
 	public Seguro getSeguro(Long seguroId) {
 		Optional<Seguro> seguro = seguroRepository.findById(seguroId);
-		if( seguro.isPresent() ) {
+		if (seguro.isPresent()) {
 			return seguro.get();
 		}
 		return null;
@@ -169,15 +167,15 @@ public class WebServiceAuth implements IWebServiceAuth {
 
 	@Override
 	public void deleteSeguro(Long seguroId) {
-		
+
 		List<CompaniaSeguro> cs = companiaSeguroRepository.findAll();
-		cs.forEach( css -> {
-			
-			if(Objects.equals(css.getNumeroPoliza(), seguroId) ) {
-				companiaSeguroRepository.deleteById( css.getId() );
-				companiaRepository.deleteById( css.getNombreCompania() );
+		cs.forEach(css -> {
+
+			if (Objects.equals(css.getNumeroPoliza(), seguroId)) {
+				companiaSeguroRepository.deleteById(css.getId());
+				companiaRepository.deleteById(css.getNombreCompania());
 			}
-			
+
 		});
 		seguroRepository.deleteById(seguroId);
 	}
@@ -195,7 +193,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 	@Override
 	public Siniestro getSiniestro(Long siniestroId) {
 		Optional<Siniestro> siniestro = siniestroRepository.findById(siniestroId);
-		if( siniestro.isPresent() ) {
+		if (siniestro.isPresent()) {
 			return siniestro.get();
 		}
 		return null;
@@ -209,22 +207,22 @@ public class WebServiceAuth implements IWebServiceAuth {
 	@Override
 	public Siniestro postSiniestro(SiniestroDto siniestroDto) {
 		Siniestro siniestro = new Siniestro();
-		siniestro.setAceptado( siniestroDto.getAceptado() );
-		siniestro.setCausas( siniestroDto.getCausas());
-		siniestro.setFechaSiniestro( siniestroDto.getFechaSiniestro());
-		siniestro.setIdSiniestro( siniestroDto.getIdSiniestro() );
-		siniestro.setIndemnizacion( siniestroDto.getIndemnizacion() );
-		
+		siniestro.setAceptado(siniestroDto.getAceptado());
+		siniestro.setCausas(siniestroDto.getCausas());
+		siniestro.setFechaSiniestro(siniestroDto.getFechaSiniestro());
+		siniestro.setIdSiniestro(siniestroDto.getIdSiniestro());
+		siniestro.setIndemnizacion(siniestroDto.getIndemnizacion());
+
 		Perito perito = new Perito();
-		perito.setDniPerito( siniestroDto.getPeritoDto().getDniPerito() );
-		siniestro.setPerito( perito );
-		
+		perito.setDniPerito(siniestroDto.getPeritoDto().getDniPerito());
+		siniestro.setPerito(perito);
+
 		Seguro seguro = new Seguro();
-		seguro.setNumeroPoliza( siniestroDto.getSeguroDto().getNumeroPoliza() );
-		seguro.setDniCl( siniestroDto.getSeguroDto().getDniCl() );
-		
-		siniestro.setSeguro( seguro );
-		
+		seguro.setNumeroPoliza(siniestroDto.getSeguroDto().getNumeroPoliza());
+		seguro.setDniCl(siniestroDto.getSeguroDto().getDniCl());
+
+		siniestro.setSeguro(seguro);
+
 		return siniestroRepository.save(siniestro);
 	}
 
@@ -233,32 +231,25 @@ public class WebServiceAuth implements IWebServiceAuth {
 		return siniestroRepository.findAll();
 	}
 
-	
-
-	
-	
-	
-	
-	
 	@Override
 	public CompaniaSeguro getCompaniaSeguro(Long companiaSeguroId) {
 		Optional<CompaniaSeguro> companiaSeguro = companiaSeguroRepository.findById(companiaSeguroId);
-		if( companiaSeguro.isPresent() ) {
+		if (companiaSeguro.isPresent()) {
 			return companiaSeguro.get();
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void deleteCompaniaSeguro(Long companiaSeguroId) {
 		companiaSeguroRepository.deleteById(companiaSeguroId);
 	}
-	
+
 	@Override
 	public CompaniaSeguro postCompaniaSeguro(CompaniaSeguroDto companiaSeguroDto) {
 		return companiaSeguroRepository.save(modelMapper.map(companiaSeguroDto, CompaniaSeguro.class));
 	}
-	
+
 	@Override
 	public List<CompaniaSeguro> getCompaniaSeguros() {
 		return companiaSeguroRepository.findAll();
@@ -278,8 +269,6 @@ public class WebServiceAuth implements IWebServiceAuth {
 	public List<Cliente> getClientesPorCiudad(String ciudadCliente) {
 		return clienteRepository.findByCiudadNot(ciudadCliente);
 	}
-	
-	
 
 	@Override
 	public List<Perito> getPeritosPorCiudad(String ciudadPerito) {
@@ -290,8 +279,6 @@ public class WebServiceAuth implements IWebServiceAuth {
 	public List<Perito> getPeritosPorCodigoPostal(String codigoPostalPerito) {
 		return peritoRepository.findByCodigoPostalEquals(codigoPostalPerito);
 	}
-	
-	
 
 	@Override
 	public List<Seguro> getSegurosPorFechaVencimientoAntesDe(String fechavencimiento) {
@@ -300,7 +287,7 @@ public class WebServiceAuth implements IWebServiceAuth {
 		try {
 			fecha = simpleDateFormat.parse(fechavencimiento);
 		} catch (ParseException e) {
-			LOG.warn(e);
+			LOG.error(e);
 		}
 		return seguroRepository.findByFechaVencimientoBefore(fecha);
 	}
@@ -314,8 +301,6 @@ public class WebServiceAuth implements IWebServiceAuth {
 	public List<Seguro> getSegurosPorObservacionesQueContengan(String observaciones) {
 		return seguroRepository.findByObservacionesContaining(observaciones);
 	}
-	
-	
 
 	@Override
 	public List<Siniestro> getSiniestrosPorFecha(String fecha) {
@@ -328,40 +313,34 @@ public class WebServiceAuth implements IWebServiceAuth {
 	}
 
 	@Override
-	public List<Siniestro> getSiniestrosPorIndemnizacion( Double indemnizacion) {
-		return siniestroRepository.findByIndemnizacionLessThanEqual( indemnizacion );
+	public List<Siniestro> getSiniestrosPorIndemnizacion(Double indemnizacion) {
+		return siniestroRepository.findByIndemnizacionLessThanEqual(indemnizacion);
 	}
-	
+
 	@Override
-	public Page<Seguro> getSegurosPorPagina( @PathVariable int pagina, @PathVariable int cantidad ){
-		Pageable paginador = PageRequest.of( pagina, cantidad );
+	public Page<Seguro> getSegurosPorPagina(@PathVariable int pagina, @PathVariable int cantidad) {
+		Pageable paginador = PageRequest.of(pagina, cantidad);
 		return seguroRepository.traerPorPagina(paginador);
 	}
-	
+
 	@Override
-	public Page<Siniestro> getSiniestrosPorPagina( @PathVariable int pagina, @PathVariable int cantidad ){
-		Pageable paginador = PageRequest.of( pagina, cantidad );
+	public Page<Siniestro> getSiniestrosPorPagina(@PathVariable int pagina, @PathVariable int cantidad) {
+		Pageable paginador = PageRequest.of(pagina, cantidad);
 		return siniestroRepository.traerPorPagina(paginador);
 	}
+
 	@Override
-	public Page<Perito> getPeritosPorPagina( @PathVariable int pagina, @PathVariable int cantidad ){
-		Pageable paginador = PageRequest.of( pagina, cantidad );
-		return peritoRepository.findAll( paginador );
+	public Page<Perito> getPeritosPorPagina(@PathVariable int pagina, @PathVariable int cantidad) {
+		Pageable paginador = PageRequest.of(pagina, cantidad);
+		return peritoRepository.findAll(paginador);
 	}
 
 	@Override
 	public Page<Cliente> getClientesPorPagina(int pagina, int cantidad) {
-		Pageable paginador = PageRequest.of( pagina, cantidad );
-		return clienteRepository.findAll( paginador );
+		Pageable paginador = PageRequest.of(pagina, cantidad);
+		return clienteRepository.findAll(paginador);
 	}
 
-
-
-	
-	
-	
-	
-	
 	@Override
 	public FuncionDto ejecutarFuncion(String texto, int numero) {
 		return sfp.funcionDb(texto, numero);
@@ -371,12 +350,10 @@ public class WebServiceAuth implements IWebServiceAuth {
 	public Funcion2Dto ejecutarFuncion2(BigDecimal numA, BigDecimal numB) {
 		return sfp.funcionDb2(numA, numB);
 	}
-	
+
 	@Override
 	public ProcedimientoDto ejectuarProcedimiento(BigDecimal numA, BigDecimal numB) {
-		return sfp.procedimientoDb( numA, numB );
+		return sfp.procedimientoDb(numA, numB);
 	}
-	
-	
-	
+
 }
