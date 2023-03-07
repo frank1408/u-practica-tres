@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-
 import com.rodriguez.practicatres.dto.ClienteDto;
 import com.rodriguez.practicatres.dto.CompaniaDto;
 import com.rodriguez.practicatres.dto.PeritoDto;
@@ -93,7 +92,9 @@ class WebServiceAuthTest {
 	
 	@Test
 	void postPeritoTest() {
+		
 		try {
+			
 			PeritoDto peritoDto = new PeritoDto();
 			peritoDto.setDniPerito("1");
 			peritoDto.setNombrePerito("Juan");
