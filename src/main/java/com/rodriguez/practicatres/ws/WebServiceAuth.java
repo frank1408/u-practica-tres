@@ -26,12 +26,6 @@ import com.rodriguez.practicatres.dto.PeritoDto;
 import com.rodriguez.practicatres.dto.ProcedimientoDto;
 import com.rodriguez.practicatres.dto.SeguroDto;
 import com.rodriguez.practicatres.dto.SiniestroDto;
-import com.rodriguez.practicatres.entity.Cliente;
-import com.rodriguez.practicatres.entity.Compania;
-import com.rodriguez.practicatres.entity.CompaniaSeguro;
-import com.rodriguez.practicatres.entity.Perito;
-import com.rodriguez.practicatres.entity.Seguro;
-import com.rodriguez.practicatres.entity.Siniestro;
 import com.rodriguez.practicatres.repository.ClienteRepository;
 import com.rodriguez.practicatres.repository.CompaniaRepository;
 import com.rodriguez.practicatres.repository.CompaniaSeguroRepository;
@@ -41,6 +35,15 @@ import com.rodriguez.practicatres.repository.SiniestroRepository;
 import com.rodriguez.practicatres.repository.UserLoginRepository;
 import com.rodriguez.practicatres.service.ServicioFuncionProcedimiento;
 import com.rodriguez.practicatres.wsint.IWebServiceAuth;
+
+
+
+import libentity.entity.Cliente;
+import libentity.entity.Compania;
+import libentity.entity.CompaniaSeguro;
+import libentity.entity.Perito;
+import libentity.entity.Seguro;
+import libentity.entity.Siniestro;
 
 @Component
 public class WebServiceAuth implements IWebServiceAuth {

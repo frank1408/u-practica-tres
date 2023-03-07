@@ -5,7 +5,8 @@ import java.io.Serializable;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.rodriguez.practicatres.entity.UserLogin;
+
+import libentity.entity.UserLogin;
 
 @Repository("userLoginRepository")
 public interface UserLoginRepository extends JpaRepository<UserLogin, Serializable> {

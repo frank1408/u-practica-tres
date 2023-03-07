@@ -21,12 +21,13 @@ import com.rodriguez.practicatres.dto.PeritoDto;
 import com.rodriguez.practicatres.dto.ProcedimientoDto;
 import com.rodriguez.practicatres.dto.SeguroDto;
 import com.rodriguez.practicatres.dto.SiniestroDto;
-import com.rodriguez.practicatres.entity.Cliente;
-import com.rodriguez.practicatres.entity.Compania;
-import com.rodriguez.practicatres.entity.CompaniaSeguro;
-import com.rodriguez.practicatres.entity.Perito;
-import com.rodriguez.practicatres.entity.Seguro;
-import com.rodriguez.practicatres.entity.Siniestro;
+
+import libentity.entity.Cliente;
+import libentity.entity.Compania;
+import libentity.entity.CompaniaSeguro;
+import libentity.entity.Perito;
+import libentity.entity.Seguro;
+import libentity.entity.Siniestro;
 
 @RestController
 @CrossOrigin

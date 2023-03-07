@@ -1,6 +1,7 @@
 
 package com.rodriguez.practicatres;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import java.util.Date;
@@ -10,17 +11,19 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+
 import com.rodriguez.practicatres.dto.ClienteDto;
 import com.rodriguez.practicatres.dto.CompaniaDto;
 import com.rodriguez.practicatres.dto.PeritoDto;
 import com.rodriguez.practicatres.dto.SeguroDto;
 import com.rodriguez.practicatres.dto.SiniestroDto;
-import com.rodriguez.practicatres.entity.Cliente;
-import com.rodriguez.practicatres.entity.Compania;
-import com.rodriguez.practicatres.entity.Perito;
-import com.rodriguez.practicatres.entity.Seguro;
-import com.rodriguez.practicatres.entity.Siniestro;
 import com.rodriguez.practicatres.ws.WebServiceAuth;
+import libentity.entity.Cliente;
+import libentity.entity.Compania;
+import libentity.entity.Perito;
+import libentity.entity.Seguro;
+import libentity.entity.Siniestro;
 
 @SpringBootTest
 class WebServiceAuthTest {
@@ -30,6 +33,12 @@ class WebServiceAuthTest {
 	@Autowired
 	WebServiceAuth webServiceAuth;
 
+	 @Test
+	  void contextLoads(ApplicationContext context) {
+	    assertThat(context).isNotNull();
+	  }
+
+	
 	@Test
 	void getClientesTest() {
 		List<Cliente> clientes = webServiceAuth.getClientes();
@@ -44,8 +53,10 @@ class WebServiceAuthTest {
 			clienteDto.setNombreCl("Jimena");
 			clienteDto.setApellido1("Gomez");
 			Cliente cliente = webServiceAuth.postCliente(clienteDto);
-			assertNotNull(cliente);
+			
 			webServiceAuth.deleteCliente(clienteDto.getDniCl());
+			assertNotNull(cliente);
+			
 		} catch (Exception exception) {
 			LOG.error(exception);
 			fail("no se pudo guardar un Cliente");
@@ -65,8 +76,9 @@ class WebServiceAuthTest {
 			companiaDto.setNombreCompania("susa");
 			companiaDto.setTelefonoContratacion("11221122");
 			Compania compania = webServiceAuth.postCompania(companiaDto);
-			assertNotNull(compania);
+			
 			webServiceAuth.deleteCompania(companiaDto.getNombreCompania());
+			assertNotNull(compania);
 		} catch (Exception exception) {
 			LOG.error(exception);
 			fail("no se pudo guardar compania");
@@ -91,8 +103,10 @@ class WebServiceAuthTest {
 			peritoDto.setCiudad("Guatemala");
 			
 			Perito perito = webServiceAuth.postPerito(peritoDto);
-			assertNotNull(perito);
+			
 			webServiceAuth.deletePerito(peritoDto.getDniPerito());
+			assertNotNull(perito);
+			
 		} catch (Exception exception) {
 			LOG.error(exception);
 			fail("no se pudo guardar perito");
@@ -113,8 +127,10 @@ class WebServiceAuthTest {
 			seguroDto.setCondicionesParticulares("pago quincenal cuota");
 			seguroDto.setFechaInicio(new Date());
 			Seguro seguro = webServiceAuth.postSeguro(seguroDto);
-			assertNotNull(seguro);
+			
 			webServiceAuth.deleteSeguro(seguro.getNumeroPoliza());
+			assertNotNull(seguro);
+			
 		} catch (Exception exception) {
 			LOG.error(exception);
 			fail("no se pudo guardar Seguro");
@@ -148,12 +164,12 @@ class WebServiceAuthTest {
 			siniestroDto.setSeguroDto(seguroDto);
 
 			Siniestro siniestro = webServiceAuth.postSiniestro(siniestroDto);
-			assertNotNull(siniestro);
+			
 			
 			webServiceAuth.deleteSiniestro(siniestro.getIdSiniestro());
 			webServiceAuth.deletePerito(perito.getDniPerito());
 			webServiceAuth.deleteSeguro(seguro.getNumeroPoliza());
-			
+			assertNotNull(siniestro);
 
 		} catch (Exception exception) {
 			LOG.error(exception);

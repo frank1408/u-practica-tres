@@ -8,7 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import com.rodriguez.practicatres.entity.Siniestro;
+
+import libentity.entity.Siniestro;
 
 @Repository("siniestroRepository")
 public interface SiniestroRepository extends JpaRepository<Siniestro, Serializable> {

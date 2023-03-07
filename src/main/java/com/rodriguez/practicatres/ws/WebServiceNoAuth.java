@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.rodriguez.practicatres.dto.TokenDto;
 import com.rodriguez.practicatres.dto.UserLoginDto;
-import com.rodriguez.practicatres.entity.UserLogin;
 import com.rodriguez.practicatres.repository.UserLoginRepository;
 import com.rodriguez.practicatres.security.TokenJwt;
 import com.rodriguez.practicatres.wsint.IWebServiceNoAuth;
+
+import libentity.entity.UserLogin;
 
 @Component
 public class WebServiceNoAuth implements IWebServiceNoAuth {

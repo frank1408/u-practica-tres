@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.rodriguez.practicatres.dto.TokenDto;
 import com.rodriguez.practicatres.dto.UserLoginDto;
-import com.rodriguez.practicatres.entity.UserLogin;
+
+import libentity.entity.UserLogin;
 
 @RestController
 @CrossOrigin
